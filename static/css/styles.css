@@ -1,0 +1,23 @@
+.product {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.product img {
+    width: 200px; /* Ширина изображений */
+    height: 200px; /* Высота изображений */
+}
+
+.product h3 {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.product p {
+    margin: 5px 0;
+}
+
