@@ -1,20 +1,34 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy as db
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_admin.form.upload import ImageUploadField
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///product.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SECRET_KEY'] = 'asda9sf79as7f9asf6sad7f6s8dfasd1231ad'
 db = SQLAlchemy(app)
 
-class Item(db.Model):
+class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
     title = db.Column(db.String(100), nullable=False) 
-    price = db.Column(db.Float, nullable=False) 
-    # image = db.Column(db.String(255)) 
-    # description = db.Column(db.Text)
-    def __repr__(self):
-        return '<Item %r>' % self.title
+    price = db.Column(db.Float, nullable=False)  
+    description = db.Column(db.Text)
+    image_path = db.Column(db.String(255))
+
+with app.app_context():
+    db.create_all()
+
+admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
+
+class ProductView(ModelView):
+    form_extra_fields = {
+        'image_path': ImageUploadField('Image', base_path='static/images/products/', url_relative_path='static/')
+    }
+
+admin.add_view(ProductView(Product, db.session, name='product_admin'))
 
 # Главная страница
 @app.route('/')
@@ -25,40 +39,23 @@ def index():
 # Страница каталога товаров
 @app.route('/catalog')
 def catalog():
-    # Здесь можно добавить логику для загрузки данных о товарах из базы данных или другого источника
-    # Затем передать эти данные в шаблон для отображения
-    return render_template('catalog.html')
+    products = Product.query.all()
+    return render_template('catalog.html', products=products)
 
-# Страница контактов
+
 @app.route('/contact')
 def contacts():
-    # Здесь можно добавить логику для отображения контактной информации, формы обратной связи и т. д.
     return render_template('contact.html')
 
 # Страница "О нас"
 @app.route('/about')
 def about():
-    # Здесь можно добавить логику для отображения информации о компании, истории, команде и т. д.
     return render_template('about.html')
 
-# Добавление товаровц
-@app.route('/create', methods=['POST','GET'])
-def create():
-    if request.method == "POST":
-        title = request.form['title']
-        price = request.form['price']
-        
-        item = Item(title=title, price=price)
-        
-        try:
-            db.session.add(item)
-            db.session.commit(item)
-            return redirect('/')
-        except:
-            return "Получилась Ошибка"
-            
-    else:
-        return render_template('create.html')
+@app.route('/download_price')
+def download_price():
+    filename = 'price_list.xlsx'
+    return send_file(filename, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)

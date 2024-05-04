@@ -4,6 +4,23 @@
     <title>Целинный РСУ</title>
     <link rel="stylesheet" href="../static/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+      /* Стили для отображения описания товара при наведении на карточку */
+      .card:hover .product-description {
+          display: block;
+      }
+      .product-description {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: #f8f9fa;
+          padding: 10px;
+          border-radius: 5px;
+          z-index: 1;
+      }
+    </style>
 </head>
 <body>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -13,7 +30,6 @@
         </a>
   
         <ul class="nav nav-pills">
-          <li class="nav-item"><a href="/create" class="nav-link active" aria-current="page">Добавить товар</a></li>
           <li class="nav-item"><a href="/catalog" class="nav-link">Каталог товаров</a></li>
           <li class="nav-item"><a href="/contact" class="nav-link">Контакты</a></li>
           <li class="nav-item"><a href="/about" class="nav-link">О нас</a></li>
