@@ -22,25 +22,37 @@
       }
     </style>
 </head>
-<body>
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-          <span class="fs-3">ООО "Целинный РСУ"</span>
-        </a>
-  
-        <ul class="nav nav-pills">
-          <li class="nav-item"><a href="/catalog" class="nav-link">Каталог товаров</a></li>
-          <li class="nav-item"><a href="/contact" class="nav-link">Контакты</a></li>
-          <li class="nav-item"><a href="/about" class="nav-link">О нас</a></li>
+<body class="d-flex flex-column vh-100"> 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Магазин Целинный</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/catalog">Каталог</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">О нас</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">Контакты</a>
+          </li>
         </ul>
-    </header>
+      </div>
+    </div>
+  </nav>
 
     {% block body %}{% endblock %}
 
-    <footer class="footer mt-auto py-3 bg-body-tertiary fixed-bottom">
-      <div class="container">
-        <span class="text-body-secondary">© 2024 ООО "Целинный РСУ"</span>
+    <footer class="bg-dark text-light py-3 mt-auto">
+      <div class="container text-center">
+        <p class="mb-0">&copy; 2024 Интернет магазин. Все права защищены.</p>
       </div>
     </footer>
 </body>
